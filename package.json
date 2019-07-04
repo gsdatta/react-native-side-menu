@@ -2,14 +2,15 @@
   "name": "react-native-side-menu",
   "version": "1.1.3",
   "description": "Simple customizable component to create side menu",
-  "main": "build/index.js",
   "scripts": {
-    "build": "./build.sh",
-    "prepublish": "./build.sh"
+    "build": "tsc",
+    "prepublish": "tsc"
   },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git@github.com:react-native-community/react-native-side-menu.git"
+    "url": "git@github.com:gsdatta/react-native-side-menu.git"
   },
   "keywords": [
     "react-native",
@@ -17,28 +18,22 @@
     "ios",
     "sidebar"
   ],
-  "author": "Alexey Kureev <kureev-mail@ya.ru> (https://github.com/Kureev)",
+  "author": "Ganesh Datta <me@ganeshdatta.com> (https://github.com/gsdatta)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/react-native-community/react-native-side-menu/issues"
-  },
-  "homepage": "https://github.com/react-native-community/react-native-side-menu",
+  "homepage": "https://github.com/gsdatta/react-native-side-menu",
   "dependencies": {
     "prop-types": "^15.5.10"
   },
   "devDependencies": {
+    "@types/react": "^16.8.23",
+    "@types/react-native": "^0.57.65",
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react-native": "^2.1.0",
-    "eslint": "3",
-    "eslint-config-airbnb": "^15.0.2",
-    "eslint-plugin-flowtype": "^2.35.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^5.0.2",
-    "eslint-plugin-react": "^7.1.0",
-    "flow-bin": "0.49",
     "react": "16.0.0-alpha.12",
-    "react-native": "^0.46.3"
+    "react-native": "^0.46.3",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.2"
   }
 }

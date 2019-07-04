@@ -2,4 +2,4 @@ examples
 node_modules
 ./.*
 ./index.js
-./styles.js
+./styles.tsx
