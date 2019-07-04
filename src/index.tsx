@@ -20,6 +20,7 @@ export interface Props {
     bounceBackOnOverdraw: boolean;
     autoClosing: boolean;
     animationStyle: Function;
+    maxDraggingOffset: number
     menu?: React.ReactElement;
 }
 
@@ -77,6 +78,7 @@ export class SideMenu extends React.Component<Props, State> {
         isOpen: false,
         bounceBackOnOverdraw: true,
         autoClosing: true,
+        maxDraggingOffset: 0
     };
 
     constructor(props: Props) {
@@ -208,8 +210,13 @@ export class SideMenu extends React.Component<Props, State> {
         if (this.state.leftValue * this.menuPositionMultiplier() >= 0) {
             let newLeft = this.prevLeft + gestureState.dx;
 
-            if (!this.props.bounceBackOnOverdraw && Math.abs(newLeft) > this.state.openMenuOffset) {
-                newLeft = this.menuPositionMultiplier() * this.state.openMenuOffset;
+
+            if (newLeft > this.props.openMenuOffset + this.props.maxDraggingOffset) {
+                newLeft = this.props.openMenuOffset + this.props.maxDraggingOffset;
+            }
+
+            if (!this.props.bounceBackOnOverdraw && Math.abs(newLeft) > this.props.openMenuOffset) {
+                newLeft = this.menuPositionMultiplier() * this.props.openMenuOffset;
             }
 
             this.props.onMove(newLeft);
