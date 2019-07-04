@@ -12,7 +12,7 @@ export interface Props {
     onSliding: Function;
     openMenuOffset: number;
     hiddenMenuOffset: number;
-    disableGestures: () => boolean | boolean;
+    disableGestures: boolean;
     animationFunction: Function;
     onAnimationComplete: Function;
     onStartShouldSetResponderCapture: Function;
@@ -41,12 +41,43 @@ function shouldOpenMenu(dx: number): boolean {
     return dx > barrierForward;
 }
 
-export default class SideMenu extends React.Component<Props, State> {
+export class SideMenu extends React.Component<Props, State> {
     public onStartShouldSetPanResponderCapture: (e: GestureResponderEvent, gestureState: PanResponderGestureState) => boolean;
     public prevLeft: number;
     public isOpen: boolean;
     private sideMenu: SideMenu | null = null;
     private responder: PanResponderInstance;
+
+    static defaultProps: Props = {
+        toleranceY: 10,
+        toleranceX: 10,
+        edgeHitWidth: 60,
+        openMenuOffset: deviceScreen.width * (2 / 3),
+        disableGestures: false,
+        menuPosition: 'left',
+        hiddenMenuOffset: 0,
+        onMove: () => {
+        },
+        onStartShouldSetResponderCapture: () => true,
+        onChange: () => {
+        },
+        onSliding: () => {
+        },
+        animationStyle: (value: Animated.Value) => ({
+            transform: [{
+                translateX: value,
+            }],
+        }),
+        animationFunction: (prop: any, value: any) => Animated.spring(prop, {
+            toValue: value,
+            friction: 8,
+        }),
+        onAnimationComplete: () => {
+        },
+        isOpen: false,
+        bounceBackOnOverdraw: true,
+        autoClosing: true,
+    };
 
     constructor(props: Props) {
         super(props);
@@ -188,11 +219,6 @@ export default class SideMenu extends React.Component<Props, State> {
 
     gesturesAreEnabled = (): boolean => {
         const {disableGestures} = this.props;
-
-        if (typeof disableGestures === "function") {
-            return !disableGestures();
-        }
-
         return !disableGestures;
     };
 
