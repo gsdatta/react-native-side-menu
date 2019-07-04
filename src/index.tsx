@@ -1,6 +1,19 @@
 import * as React from "react";
-import {Animated, Dimensions, GestureResponderEvent, LayoutChangeEvent, PanResponder, PanResponderGestureState, PanResponderInstance, TouchableWithoutFeedback, View} from "react-native";
+import {
+    Animated,
+    Dimensions,
+    GestureResponderEvent,
+    LayoutChangeEvent,
+    PanResponder,
+    PanResponderGestureState,
+    PanResponderInstance,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    View,
+    ViewStyle
+} from "react-native";
 import {styles} from "./styles";
+
 
 export interface Props {
     edgeHitWidth: number;
@@ -15,7 +28,7 @@ export interface Props {
     disableGestures: boolean;
     animationFunction: Function;
     onAnimationComplete: Function;
-    onStartShouldSetResponderCapture: Function;
+    onStartShouldSetPanResponderCapture: Function;
     isOpen: boolean;
     bounceBackOnOverdraw: boolean;
     autoClosing: boolean;
@@ -59,7 +72,7 @@ export class SideMenu extends React.Component<Props, State> {
         hiddenMenuOffset: 0,
         onMove: () => {
         },
-        onStartShouldSetResponderCapture: () => true,
+        onStartShouldSetPanResponderCapture: () => false,
         onChange: () => {
         },
         onSliding: () => {
@@ -96,8 +109,7 @@ export class SideMenu extends React.Component<Props, State> {
                 : props.hiddenMenuOffset,
         );
 
-        this.onLayoutChange = this.onLayoutChange.bind(this);
-        this.onStartShouldSetPanResponderCapture = props.onStartShouldSetResponderCapture.bind(this);
+        this.onStartShouldSetPanResponderCapture = props.onStartShouldSetPanResponderCapture.bind(this);
 
         this.state = {
             width: deviceScreen.width,
@@ -125,12 +137,12 @@ export class SideMenu extends React.Component<Props, State> {
 
     }
 
-    public onLayoutChange(e: LayoutChangeEvent) {
+    onLayoutChange = (e: LayoutChangeEvent) => {
         const {width, height} = e.nativeEvent.layout;
         const openMenuOffset = width * this.state.openOffsetMenuPercentage;
         const hiddenMenuOffset = width * this.state.hiddenMenuOffsetPercentage;
         this.setState({width, height, openMenuOffset, hiddenMenuOffset});
-    }
+    };
 
     /**
      * Get content view. This view will be rendered over menu
@@ -259,3 +271,4 @@ export class SideMenu extends React.Component<Props, State> {
     }
 
 }
+
